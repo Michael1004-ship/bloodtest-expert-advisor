@@ -53,6 +53,7 @@ def extract_text_from_image(image_data):
         
         # 인증 파일 존재 확인
         credentials_path = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
+        print(f"GOOGLE_APPLICATION_CREDENTIALS 경로: {credentials_path}")  # 경로 출력
         if not credentials_path:
             raise ValueError("❌ GOOGLE_APPLICATION_CREDENTIALS 환경 변수가 설정되지 않았습니다!")
         
