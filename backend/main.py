@@ -53,8 +53,9 @@ def extract_text_from_image(image_data):
         print("Starting text extraction...")
         
         # 인증 파일 존재 확인
-        if not os.path.exists(credentials_path):
-            raise Exception(f"Google Cloud 인증 파일을 찾을 수 없습니다: {credentials_path}")
+        credentials_path = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
+        if not credentials_path:
+            raise ValueError("❌ GOOGLE_APPLICATION_CREDENTIALS 환경 변수가 설정되지 않았습니다!")
         
         client = vision.ImageAnnotatorClient()
         image = vision.Image(content=image_data)
@@ -96,6 +97,8 @@ def clean_extracted_text(text):
     text = re.sub(r'(\d+)([a-zA-Z]+)', r'\1 \2', text)  # 숫자와 단위 사이에 공백 추가
     
     return text.strip()
+
+app = FastAPI()
 
 @app.post("/upload")
 async def upload_image(file: UploadFile = File(...)):
