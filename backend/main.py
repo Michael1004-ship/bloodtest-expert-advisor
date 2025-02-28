@@ -66,6 +66,8 @@ app.add_middleware(
 
 # OpenAI 클라이언트 초기화
 api_key = os.getenv('OPENAI_API_KEY')
+if not api_key:
+    raise ValueError("❌ OPENAI_API_KEY 환경 변수가 설정되지 않았습니다!")
 client = OpenAI(api_key=api_key)
 
 # 폰트 설정 (파일 상단으로 이동)
