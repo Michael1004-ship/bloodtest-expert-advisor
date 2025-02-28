@@ -100,6 +100,15 @@ def clean_extracted_text(text):
 
 app = FastAPI()
 
+# CORS 설정 추가
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://bloodtest-expert-advisor.vercel.app"],  # 허용할 도메인
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 @app.post("/upload")
 async def upload_image(file: UploadFile = File(...)):
     try:
