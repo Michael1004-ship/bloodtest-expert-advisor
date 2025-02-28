@@ -364,8 +364,8 @@ async def generate_pdf_report(request: ReportRequest):
         print(f"PDF 생성 오류: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/")
-async def root():
+@app.head("/")
+async def read_root_head():
     return {"message": "Server is running!"}
 
 # Keep-alive ping 추가
