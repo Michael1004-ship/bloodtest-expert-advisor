@@ -224,8 +224,8 @@ C. 대사성 상태 평가
 ※ SI 단위계 사용을 원칙으로 하되, 필요시 기존 단위를 병기합니다.
 ※ Critical values는 즉시 보고 대상으로 별도 표시합니다."""
 
-        response = openai.ChatCompletion.create(
-            model="gpt-4",
+        response = openai.chat.completions.create(
+            model="gpt-4o",
             messages=[
                 {"role": "system", "content": """You are a highly specialized clinical pathologist with extensive experience in laboratory medicine and molecular diagnostics. 
                 Provide extremely detailed, academic-level analysis using professional medical terminology and current scientific evidence. 
