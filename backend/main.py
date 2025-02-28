@@ -14,6 +14,7 @@ from typing import Dict
 
 from google.cloud import vision
 from openai import OpenAI
+import openai
 
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
@@ -31,10 +32,8 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent
 
 # OpenAI 클라이언트 초기화
-api_key = os.getenv('OPENAI_API_KEY')
-if not api_key:
-    raise ValueError("❌ OPENAI_API_KEY 환경 변수가 설정되지 않았습니다!")
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+import openai
+openai.api_key = os.getenv("OPENAI_API_KEY")  # 환경변수에서 API 키를 가져와서 설정
 print("✅ OpenAI 클라이언트가 정상적으로 설정되었습니다!")
 
 # 폰트 설정 (파일 상단으로 이동)
@@ -205,7 +204,7 @@ C. 대사성 상태 평가
 ※ SI 단위계 사용을 원칙으로 하되, 필요시 기존 단위를 병기합니다.
 ※ Critical values는 즉시 보고 대상으로 별도 표시합니다."""
 
-        response = client.chat.completions.create(
+        response = openai.ChatCompletion.create(
             model="gpt-4",
             messages=[
                 {"role": "system", "content": """You are a highly specialized clinical pathologist with extensive experience in laboratory medicine and molecular diagnostics. 
