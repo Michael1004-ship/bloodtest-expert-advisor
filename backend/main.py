@@ -56,7 +56,7 @@ app = FastAPI()
 # CORS 설정 (한 번만 설정)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # 프론트엔드 주소 명시
+    allow_origins=["https://bloodtest-expert-advisor.vercel.app"],  # 정확한 프론트엔드 URL
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
