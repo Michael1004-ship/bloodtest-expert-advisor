@@ -27,9 +27,13 @@ const UploadBloodTest = () => {
     try {
       setLoading(true);
       const formData = new FormData();
-      formData.append('file', selectedFile);
+      formData.append("file", selectedFile);
 
-      const uploadResponse = await axios.post(`${BACKEND_URL}/upload`, formData);
+      const uploadResponse = await axios.post(`${BACKEND_URL}/upload`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        }
+      });
       setExtractedText(uploadResponse.data.text);
 
       if (uploadResponse.data.text) {

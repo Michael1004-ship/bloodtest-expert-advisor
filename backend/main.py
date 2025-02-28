@@ -121,7 +121,7 @@ async def shutdown_event():
 
 @app.post("/upload")
 async def upload_image(file: UploadFile = File(...)):
-    return {"message": "파일 업로드 성공"}
+    return {"filename": file.filename, "content_type": file.content_type}
 
 # Request 모델 정의
 class TextRequest(BaseModel):
