@@ -101,10 +101,10 @@ def clean_extracted_text(text):
 
 app = FastAPI()
 
-# 🔥 CORS 설정 추가
+# CORS 설정 추가
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # 모든 도메인 허용 (보안상 특정 도메인으로 변경 가능)
+    allow_origins=["https://bloodtest-expert-advisor.vercel.app"],  # 허용할 도메인
     allow_credentials=True,
     allow_methods=["*"],  # 모든 HTTP 메서드 허용 (GET, POST 등)
     allow_headers=["*"],  # 모든 헤더 허용
