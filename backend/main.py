@@ -36,34 +36,6 @@ load_dotenv()
 # 현재 파일의 디렉토리 경로 가져오기
 BASE_DIR = Path(__file__).resolve().parent
 
-# Google 인증 처리
-def setup_google_credentials():
-    google_credentials = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
-    if google_credentials:
-        try:
-            credentials_path = "/tmp/google-credentials.json"
-            with open(credentials_path, "w") as f:
-                json.dump(json.loads(google_credentials), f)
-            os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials_path
-            print(f"✅ Google Credentials 파일이 생성되었습니다: {credentials_path}")
-        except (IOError, json.JSONDecodeError) as e:
-            print(f"❌ Google Credentials 파일 생성 실패: {e}")
-    else:
-        print("❌ GOOGLE_APPLICATION_CREDENTIALS 환경 변수가 설정되지 않았습니다!")
-
-setup_google_credentials()
-
-app = FastAPI()
-
-# CORS 설정 (한 번만 설정)
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["https://bloodtest-expert-advisor.vercel.app"],  # 프론트엔드 도메인
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 # OpenAI 클라이언트 초기화
 api_key = os.getenv('OPENAI_API_KEY')
 if not api_key:
