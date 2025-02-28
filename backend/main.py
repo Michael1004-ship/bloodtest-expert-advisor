@@ -28,6 +28,7 @@ from reportlab.lib.pagesizes import A4
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib import colors
+import json
 
 # .env 파일 로드
 load_dotenv()
@@ -35,9 +36,17 @@ load_dotenv()
 # 현재 파일의 디렉토리 경로 가져오기
 BASE_DIR = Path(__file__).resolve().parent
 
-# Google Cloud 인증 파일 경로 설정
-credentials_path = str(BASE_DIR / 'google-credentials.json')
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credentials_path
+# Google 인증 처리 부분 수정
+if os.getenv('GOOGLE_CREDENTIALS'):
+    # 환경변수에서 JSON 읽기
+    google_creds = json.loads(os.getenv('GOOGLE_CREDENTIALS'))
+    # JSON 파일 임시 생성
+    with open('temp_credentials.json', 'w') as f:
+        json.dump(google_creds, f)
+    credentials_path = 'temp_credentials.json'
+else:
+    # 로컬 개발 환경용
+    credentials_path = 'path/to/your/credentials.json'
 
 print(f"Google Cloud 인증 파일 경로: {credentials_path}")
 print(f"인증 파일 존재 여부: {os.path.exists(credentials_path)}")
