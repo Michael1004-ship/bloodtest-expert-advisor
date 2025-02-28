@@ -12,6 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Dict
 import asyncio
+import uvicorn
 
 from google.cloud import vision
 from openai import OpenAI
@@ -398,3 +399,7 @@ async def root():
 @app.get("/ping")
 async def ping():
     return {"status": "alive"}
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8000))  # 환경 변수에서 PORT 가져오기, 없으면 8000 사용
+    uvicorn.run(app, host="0.0.0.0", port=port)
