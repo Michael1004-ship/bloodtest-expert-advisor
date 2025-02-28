@@ -121,34 +121,7 @@ async def shutdown_event():
 
 @app.post("/upload")
 async def upload_image(file: UploadFile = File(...)):
-    try:
-        print("OCR 요청 시작...")
-        
-        if not file:
-            return {"error": "파일을 선택해주세요."}
-            
-        # 이미지 형식 확인
-        allowed_types = ['image/jpeg', 'image/png', 'image/gif']
-        if file.content_type not in allowed_types:
-            return {"error": "지원되지 않는 파일 형식입니다. JPG, PNG, GIF 파일만 업로드 가능합니다."}
-        
-        image_data = await file.read()
-        print(f"File size: {len(image_data)} bytes")
-        
-        # 텍스트 추출
-        extracted_text = extract_text_from_image(image_data)
-        if not extracted_text:
-            return {"error": "텍스트를 추출할 수 없습니다. 이미지를 확인해주세요."}
-        
-        # 텍스트 정리
-        cleaned_text = clean_extracted_text(extracted_text)
-        print(f"Cleaned text: {cleaned_text[:100]}...")
-        
-        return {"text": cleaned_text}  # 분석 부분 제거
-        
-    except Exception as e:
-        print(f"Upload error: {str(e)}")
-        return {"error": f"파일 처리 중 오류가 발생했습니다: {str(e)}"}
+    return {"message": "파일 업로드 성공"}
 
 # Request 모델 정의
 class TextRequest(BaseModel):
