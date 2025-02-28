@@ -11,6 +11,7 @@ from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Dict
+import asyncio
 
 from google.cloud import vision
 from openai import OpenAI
@@ -100,14 +101,22 @@ def clean_extracted_text(text):
 
 app = FastAPI()
 
-# CORS 설정 추가
+# 🔥 CORS 설정 추가
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://bloodtest-expert-advisor.vercel.app"],  # 허용할 도메인
+    allow_origins=["*"],  # 모든 도메인 허용 (보안상 특정 도메인으로 변경 가능)
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],  # 모든 HTTP 메서드 허용 (GET, POST 등)
+    allow_headers=["*"],  # 모든 헤더 허용
 )
+
+@app.on_event("startup")
+async def startup_event():
+    print("✅ 서버 시작됨!")
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    print("❌ 서버 종료됨!")
 
 @app.post("/upload")
 async def upload_image(file: UploadFile = File(...)):
@@ -384,3 +393,8 @@ async def generate_pdf_report(request: ReportRequest):
 @app.get("/")
 async def root():
     return {"message": "Welcome to Blood Test Analysis API"}
+
+# Keep-alive ping 추가
+@app.get("/ping")
+async def ping():
+    return {"status": "alive"}
