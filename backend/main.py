@@ -1,26 +1,28 @@
 import os
 import json
-from dotenv import load_dotenv
-from fastapi import FastAPI, UploadFile, File, Body
 import io
-from google.cloud import vision
-from openai import OpenAI
-from reportlab.lib.pagesizes import letter, A4
-from reportlab.pdfgen import canvas
+import re
 from datetime import datetime
+from pathlib import Path
+
+from dotenv import load_dotenv
+from fastapi import FastAPI, UploadFile, File, Body, HTTPException
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Dict
-from pathlib import Path
-import re
+
+from google.cloud import vision
+from openai import OpenAI
+
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import Paragraph, Spacer, Table, TableStyle, SimpleDocTemplate
 from reportlab.lib import colors
 from reportlab.lib.units import inch
-from fastapi import HTTPException
 
 # .env 파일 로드
 load_dotenv()
