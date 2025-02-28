@@ -5,7 +5,7 @@ from fastapi import FastAPI, UploadFile, File, Body
 import io
 from google.cloud import vision
 from openai import OpenAI
-from reportlab.lib.pagesizes import letter
+from reportlab.lib.pagesizes import letter, A4
 from reportlab.pdfgen import canvas
 from datetime import datetime
 from fastapi.responses import StreamingResponse
@@ -16,19 +16,11 @@ from pathlib import Path
 import re
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.platypus import Paragraph
-from reportlab.lib import colors
-from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
-from reportlab.lib.units import inch
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
-from fastapi import HTTPException
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.lib.pagesizes import A4
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.platypus import Paragraph, Spacer, Table, TableStyle, SimpleDocTemplate
 from reportlab.lib import colors
+from reportlab.lib.units import inch
+from fastapi import HTTPException
 
 # .env 파일 로드
 load_dotenv()
@@ -41,6 +33,7 @@ api_key = os.getenv('OPENAI_API_KEY')
 if not api_key:
     raise ValueError("❌ OPENAI_API_KEY 환경 변수가 설정되지 않았습니다!")
 client = OpenAI(api_key=api_key)
+print("✅ OpenAI 클라이언트가 정상적으로 설정되었습니다!")
 
 # 폰트 설정 (파일 상단으로 이동)
 FONT_DIR = BASE_DIR / 'fonts'
@@ -377,4 +370,3 @@ async def generate_pdf_report(request: ReportRequest):
 @app.get("/")
 async def root():
     return {"message": "Welcome to Blood Test Analysis API"}
-
