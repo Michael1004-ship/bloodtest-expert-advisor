@@ -393,7 +393,7 @@ async def generate_pdf_report(request: ReportRequest):
 
 @app.get("/")
 async def root():
-    return {"message": "Welcome to Blood Test Analysis API"}
+    return {"message": "Server is running!"}
 
 # Keep-alive ping 추가
 @app.get("/ping")
