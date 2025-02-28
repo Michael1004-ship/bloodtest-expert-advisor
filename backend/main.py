@@ -403,3 +403,4 @@ async def generate_pdf_report(request: ReportRequest):
 @app.get("/")
 async def root():
     return {"message": "Welcome to Blood Test Analysis API"}
+
