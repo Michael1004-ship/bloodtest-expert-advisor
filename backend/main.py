@@ -41,7 +41,7 @@ def setup_google_credentials():
     google_credentials = os.getenv("GOOGLE_CREDENTIALS")
     if google_credentials:
         try:
-            credentials_path = "/tmp/credentials.json"
+            credentials_path = "/tmp/google-credentials.json"
             with open(credentials_path, "w") as f:
                 json.dump(json.loads(google_credentials), f)
             os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials_path
