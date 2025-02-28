@@ -38,7 +38,7 @@ BASE_DIR = Path(__file__).resolve().parent
 
 # Google 인증 처리
 def setup_google_credentials():
-    google_credentials = os.getenv("GOOGLE_CREDENTIALS")
+    google_credentials = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
     if google_credentials:
         try:
             credentials_path = "/tmp/google-credentials.json"
@@ -49,7 +49,7 @@ def setup_google_credentials():
         except (IOError, json.JSONDecodeError) as e:
             print(f"❌ Google Credentials 파일 생성 실패: {e}")
     else:
-        print("❌ GOOGLE_CREDENTIALS 환경 변수가 설정되지 않았습니다!")
+        print("❌ GOOGLE_APPLICATION_CREDENTIALS 환경 변수가 설정되지 않았습니다!")
 
 setup_google_credentials()
 
